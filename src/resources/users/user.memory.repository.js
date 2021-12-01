@@ -53,7 +53,7 @@ const deleteUser = async (id) => {
       const indexUser = users.findIndex((user) => user.id === id);
       users.splice(indexUser, 1);
 
-      resolve();
+      resolve(indexUser);
     }, 20);
   });
 
