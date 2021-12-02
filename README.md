@@ -17,6 +17,12 @@ git clone {repository URL}
 npm install
 ```
 
+## Switch to the task4 branch
+
+```
+git checkout task4
+```
+
 ## Running application
 
 ```
