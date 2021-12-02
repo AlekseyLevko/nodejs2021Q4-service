@@ -1,4 +1,5 @@
 const Board = require('./board.model');
+const { getAllTasks, deleteTask } = require('../tasks/task.memory.repository');
 
 const boards = [];
 
@@ -49,10 +50,11 @@ const updateBoard = async (id, { title, columns }) => {
 
 const deleteBoard = async (id) => {
   const promise = new Promise((resolve) => {
-    setTimeout(() => {
+    setTimeout(async () => {
       const indexBoard = boards.findIndex((board) => board.id === id);
       boards.splice(indexBoard, 1);
-
+      const tasks = await getAllTasks(id);
+      tasks.forEach((task) => task.boardId === id && deleteTask(task.id));
       resolve(indexBoard);
     }, 20);
   });
