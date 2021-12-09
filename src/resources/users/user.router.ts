@@ -86,7 +86,7 @@ const deleteUserOpts = {
   handler: deleteUser,
 };
 
-const userRoutes = (fastify, options, done) => {
+const userRoutes = (fastify: any, options: any, done: any) => {
   fastify.get('/users', getUsersOpts);
   fastify.get('/users/:userId', getUserOpts);
   fastify.post('/users', postUserOpts);
