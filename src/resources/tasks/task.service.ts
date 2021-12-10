@@ -1,6 +1,5 @@
 import { Task } from '../../types';
-
-const tasksRepo = require('./task.memory.repository');
+import { tasksRepo } from './task.memory.repository';
 
 const getAllTasks = (boardId: string) => tasksRepo.getAllTasks(boardId);
 

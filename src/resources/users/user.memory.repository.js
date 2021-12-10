@@ -1,5 +1,5 @@
 const User = require('./user.model');
-const { tasks } = require('../tasks/task.memory.repository');
+const { tasksRepo } = require('../tasks/task.memory.repository');
 
 const users = [];
 
@@ -53,7 +53,9 @@ const deleteUser = async (id) => {
     setTimeout(() => {
       const indexUser = users.findIndex((user) => user.id === id);
       users.splice(indexUser, 1);
-      tasks.forEach((task) => task.userId === id && task.setNullToUserId());
+      tasksRepo.tasks.forEach(
+        (task) => task.userId === id && task.setNullToUserId()
+      );
       resolve(indexUser);
     }, 20);
   });

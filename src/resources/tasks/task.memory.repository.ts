@@ -84,7 +84,7 @@ const deleteTask = async (id: string) => {
   return promise.then((data) => data);
 };
 
-module.exports = {
+export const tasksRepo = {
   tasks,
   getAllTasks,
   getTaskById,
