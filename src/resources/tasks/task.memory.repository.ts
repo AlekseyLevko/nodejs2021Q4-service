@@ -1,8 +1,9 @@
 const Task = require('./task.model');
+import { Task as TaskType } from '../../types';
 
-const tasks = [];
+const tasks: TaskType[] = [];
 
-const getAllTasks = async (boardId) => {
+const getAllTasks = async (boardId: string) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       resolve(tasks.filter((task) => task.boardId === boardId));
@@ -12,7 +13,7 @@ const getAllTasks = async (boardId) => {
   return promise.then((data) => data);
 };
 
-const getTaskById = async (boardId, taskId) => {
+const getTaskById = async (boardId: string, taskId: string) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const task = tasks.find((item) => item.id === taskId);
@@ -24,8 +25,8 @@ const getTaskById = async (boardId, taskId) => {
 };
 
 const addTask = async (
-  boardId,
-  { title, order, description, userId, columnId }
+  boardId: string,
+  { title, order, description, userId, columnId }: TaskType
 ) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
@@ -46,9 +47,9 @@ const addTask = async (
 };
 
 const updateTask = async (
-  boardId,
-  taskId,
-  { title, order, description, userId, columnId }
+  boardId: string,
+  taskId: string,
+  { title, order, description, userId, columnId }: TaskType
 ) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
@@ -69,7 +70,7 @@ const updateTask = async (
   return promise.then((data) => data);
 };
 
-const deleteTask = async (id) => {
+const deleteTask = async (id: string) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const indexTask = tasks.findIndex((task) => task.id === id);
