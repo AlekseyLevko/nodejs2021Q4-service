@@ -54,6 +54,7 @@
     "yamljs": "0.3.0"
   },
   "devDependencies": {
+    "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "5.5.0",
     "@typescript-eslint/parser": "5.5.0",
     "chai": "4.3.4",
