@@ -1,12 +1,20 @@
 const taskService = require('./task.service');
+import { FastifyReply, FastifyRequest } from 'fastify';
 
-const getAllTasks = async (req, reply) => {
+type RequestWithParams = FastifyRequest<{
+  Params: {
+    boardId: string;
+    taskId?: string;
+  };
+}>;
+
+const getAllTasks = async (req: RequestWithParams, reply: FastifyReply) => {
   const { boardId } = req.params;
   const tasks = await taskService.getAllTasks(boardId);
   reply.send(tasks);
 };
 
-const getTaskById = async (req, reply) => {
+const getTaskById = async (req: RequestWithParams, reply: FastifyReply) => {
   const { boardId, taskId } = req.params;
   const task = await taskService.getTaskById(boardId, taskId);
   if (!task)
@@ -14,14 +22,14 @@ const getTaskById = async (req, reply) => {
   reply.send(task);
 };
 
-const addTask = async (req, reply) => {
+const addTask = async (req: RequestWithParams, reply: FastifyReply) => {
   const { boardId } = req.params;
   const task = req.body;
   const newTask = await taskService.addTask(boardId, task);
   reply.code(201).send(newTask);
 };
 
-const updateTask = async (req, reply) => {
+const updateTask = async (req: RequestWithParams, reply: FastifyReply) => {
   const { boardId, taskId } = req.params;
   const task = req.body;
   const updatedTask = await taskService.updateTask(boardId, taskId, task);
@@ -30,7 +38,7 @@ const updateTask = async (req, reply) => {
   reply.send(updatedTask);
 };
 
-const deleteTask = async (req, reply) => {
+const deleteTask = async (req: RequestWithParams, reply: FastifyReply) => {
   const { taskId } = req.params;
   const deletedTaskIndex = await taskService.deleteTask(taskId);
   if (deletedTaskIndex === -1)
