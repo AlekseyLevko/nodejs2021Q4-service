@@ -1,4 +1,5 @@
 import { Task as TaskType } from '../../types';
+
 const Task = require('./task.model');
 
 const tasks: TaskType[] = [];

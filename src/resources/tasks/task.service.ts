@@ -1,5 +1,6 @@
-const tasksRepo = require('./task.memory.repository');
 import { Task } from '../../types';
+
+const tasksRepo = require('./task.memory.repository');
 
 const getAllTasks = (boardId: string) => tasksRepo.getAllTasks(boardId);
 
@@ -12,7 +13,12 @@ const addTask = (boardId: string, task: Task) =>
 const updateTask = (boardId: string, taskId: string, task: Task) =>
   tasksRepo.updateTask(boardId, taskId, task);
 
-const deleteTask = (boardId: string, taskId: string) =>
-  tasksRepo.deleteTask(boardId, taskId);
+const deleteTask = (taskId: string) => tasksRepo.deleteTask(taskId);
 
-module.exports = { getAllTasks, getTaskById, addTask, updateTask, deleteTask };
+export const taskService = {
+  getAllTasks,
+  getTaskById,
+  addTask,
+  updateTask,
+  deleteTask,
+};

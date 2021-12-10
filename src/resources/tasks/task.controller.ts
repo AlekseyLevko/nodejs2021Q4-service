@@ -1,11 +1,13 @@
-const taskService = require('./task.service');
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { Task } from '../../types';
+import { taskService } from './task.service';
 
 type RequestWithParams = FastifyRequest<{
   Params: {
     boardId: string;
-    taskId?: string;
+    taskId: string;
   };
+  Body: Task;
 }>;
 
 const getAllTasks = async (req: RequestWithParams, reply: FastifyReply) => {
@@ -46,4 +48,4 @@ const deleteTask = async (req: RequestWithParams, reply: FastifyReply) => {
   reply.send({ message: ` task with id ${taskId} has been deleted` });
 };
 
-module.exports = { getAllTasks, getTaskById, addTask, updateTask, deleteTask };
+export { getAllTasks, getTaskById, addTask, updateTask, deleteTask };

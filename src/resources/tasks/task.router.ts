@@ -1,12 +1,11 @@
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
-
-const {
+import {
+  addTask,
+  deleteTask,
   getAllTasks,
   getTaskById,
-  addTask,
   updateTask,
-  deleteTask,
-} = require('./task.controller');
+} from './task.controller';
 
 const Task = {
   type: 'object',
