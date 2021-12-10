@@ -1,3 +1,5 @@
+import { FastifyInstance, FastifyServerOptions } from 'fastify';
+
 const {
   getAllBoards,
   getBoardById,
@@ -93,7 +95,11 @@ const deleteBoardOpts = {
   handler: deleteBoard,
 };
 
-const boardRoutes = (fastify, options, done) => {
+const boardRoutes = (
+  fastify: FastifyInstance,
+  options: FastifyServerOptions,
+  done: () => void
+) => {
   fastify.get('/boards', getBoardsOpts);
   fastify.get('/boards/:boardId', getBoardOpts);
   fastify.post('/boards', postBoardOpts);
@@ -103,4 +109,4 @@ const boardRoutes = (fastify, options, done) => {
   done();
 };
 
-module.exports = boardRoutes;
+export default boardRoutes;

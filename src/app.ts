@@ -1,6 +1,12 @@
-const fastify = require('fastify')({ logger: false });
+import fastify from 'fastify';
+import fastifySwagger from 'fastify-swagger';
+import boardRoutes from './resources/boards/board.router';
+import taskRoutes from './resources/tasks/task.router';
+import userRoutes from './resources/users/user.router';
 
-fastify.register(require('fastify-swagger'), {
+const server = fastify({ logger: false });
+
+server.register(fastifySwagger as () => void, {
   exposeRoute: true,
   routePrefix: '/doc',
   swagger: {
@@ -8,8 +14,8 @@ fastify.register(require('fastify-swagger'), {
   },
 });
 
-fastify.register(require('./resources/users/user.router'));
-fastify.register(require('./resources/boards/board.router'));
-fastify.register(require('./resources/tasks/task.router'));
+server.register(userRoutes);
+server.register(boardRoutes);
+server.register(taskRoutes);
 
-module.exports = fastify;
+export default server;

@@ -1,4 +1,5 @@
-const app = require('./app');
+import app from './app';
+
 const { PORT } = require('./common/config');
 
 const start: () => void = async () => {

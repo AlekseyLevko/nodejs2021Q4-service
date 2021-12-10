@@ -1,3 +1,5 @@
+import { FastifyInstance, FastifyServerOptions } from 'fastify';
+
 const {
   getAllTasks,
   getTaskById,
@@ -94,7 +96,11 @@ const deleteTaskOpts = {
   handler: deleteTask,
 };
 
-const taskRoutes = (fastify, options, done) => {
+const taskRoutes = (
+  fastify: FastifyInstance,
+  options: FastifyServerOptions,
+  done: () => void
+) => {
   fastify.get('/boards/:boardId/tasks', getTasksOpts);
   fastify.get('/boards/:boardId/tasks/:taskId', getTaskOpts);
   fastify.post('/boards/:boardId/tasks', postTaskOpts);
@@ -104,4 +110,4 @@ const taskRoutes = (fastify, options, done) => {
   done();
 };
 
-module.exports = taskRoutes;
+export default taskRoutes;
