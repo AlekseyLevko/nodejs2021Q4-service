@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { Task } from '../../types';
 import { taskService } from './task.service';
 
-type RequestWithParams = FastifyRequest<{
+type CustomRequest = FastifyRequest<{
   Params: {
     boardId: string;
     taskId: string;
@@ -10,13 +10,13 @@ type RequestWithParams = FastifyRequest<{
   Body: Task;
 }>;
 
-const getAllTasks = async (req: RequestWithParams, reply: FastifyReply) => {
+const getAllTasks = async (req: CustomRequest, reply: FastifyReply) => {
   const { boardId } = req.params;
   const tasks = await taskService.getAllTasks(boardId);
   reply.send(tasks);
 };
 
-const getTaskById = async (req: RequestWithParams, reply: FastifyReply) => {
+const getTaskById = async (req: CustomRequest, reply: FastifyReply) => {
   const { boardId, taskId } = req.params;
   const task = await taskService.getTaskById(boardId, taskId);
   if (!task)
@@ -24,14 +24,14 @@ const getTaskById = async (req: RequestWithParams, reply: FastifyReply) => {
   reply.send(task);
 };
 
-const addTask = async (req: RequestWithParams, reply: FastifyReply) => {
+const addTask = async (req: CustomRequest, reply: FastifyReply) => {
   const { boardId } = req.params;
   const task = req.body;
   const newTask = await taskService.addTask(boardId, task);
   reply.code(201).send(newTask);
 };
 
-const updateTask = async (req: RequestWithParams, reply: FastifyReply) => {
+const updateTask = async (req: CustomRequest, reply: FastifyReply) => {
   const { boardId, taskId } = req.params;
   const task = req.body;
   const updatedTask = await taskService.updateTask(boardId, taskId, task);
@@ -40,7 +40,7 @@ const updateTask = async (req: RequestWithParams, reply: FastifyReply) => {
   reply.send(updatedTask);
 };
 
-const deleteTask = async (req: RequestWithParams, reply: FastifyReply) => {
+const deleteTask = async (req: CustomRequest, reply: FastifyReply) => {
   const { taskId } = req.params;
   const deletedTaskIndex = await taskService.deleteTask(taskId);
   if (deletedTaskIndex === -1)

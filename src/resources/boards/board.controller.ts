@@ -1,11 +1,20 @@
-const boardService = require('./board.service');
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { Board } from '../../types';
+import { boardService } from './board.service';
 
-const getAllBoards = async (req, reply) => {
+type CustomRequest = FastifyRequest<{
+  Params: {
+    boardId: string;
+  };
+  Body: Board;
+}>;
+
+const getAllBoards = async (req: FastifyRequest, reply: FastifyReply) => {
   const boards = await boardService.getAllBoards();
   reply.send(boards);
 };
 
-const getBoardById = async (req, reply) => {
+const getBoardById = async (req: CustomRequest, reply: FastifyReply) => {
   const { boardId } = req.params;
   const board = await boardService.getBoardById(boardId);
   if (!board)
@@ -13,13 +22,13 @@ const getBoardById = async (req, reply) => {
   reply.send(board);
 };
 
-const addBoard = async (req, reply) => {
+const addBoard = async (req: CustomRequest, reply: FastifyReply) => {
   const board = req.body;
   const newBoard = await boardService.addBoard(board);
   reply.code(201).send(newBoard);
 };
 
-const updateBoard = async (req, reply) => {
+const updateBoard = async (req: CustomRequest, reply: FastifyReply) => {
   const { boardId } = req.params;
   const board = req.body;
   const updatedBoard = await boardService.updateBoard(boardId, board);
@@ -28,7 +37,7 @@ const updateBoard = async (req, reply) => {
   reply.send(updatedBoard);
 };
 
-const deleteBoard = async (req, reply) => {
+const deleteBoard = async (req: CustomRequest, reply: FastifyReply) => {
   const { boardId } = req.params;
   const deletedBoardIndex = await boardService.deleteBoard(boardId);
   if (deletedBoardIndex === -1)
@@ -36,10 +45,4 @@ const deleteBoard = async (req, reply) => {
   reply.send({ message: ` board with id ${boardId} has been deleted` });
 };
 
-module.exports = {
-  getAllBoards,
-  getBoardById,
-  addBoard,
-  updateBoard,
-  deleteBoard,
-};
+export { getAllBoards, getBoardById, addBoard, updateBoard, deleteBoard };

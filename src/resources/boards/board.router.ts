@@ -1,12 +1,11 @@
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
-
-const {
+import {
+  addBoard,
+  deleteBoard,
   getAllBoards,
   getBoardById,
-  addBoard,
   updateBoard,
-  deleteBoard,
-} = require('./board.controller');
+} from './board.controller';
 
 const Column = {
   type: 'object',

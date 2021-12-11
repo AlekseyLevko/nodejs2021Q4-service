@@ -1,7 +1,8 @@
-const Board = require('./board.model');
-const { tasksRepo } = require('../tasks/task.memory.repository');
+import { Board as BoardType } from '../../types';
+import { tasksRepo } from '../tasks/task.memory.repository';
+import Board from './board.model';
 
-const boards = [];
+const boards: BoardType[] = [];
 
 const getAllBoards = async () => {
   const promise = new Promise((resolve) => {
@@ -13,7 +14,7 @@ const getAllBoards = async () => {
   return promise.then((data) => data);
 };
 
-const getBoardById = async (id) => {
+const getBoardById = async (id: string) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const board = boards.find((item) => item.id === id);
@@ -24,7 +25,7 @@ const getBoardById = async (id) => {
   return promise.then((data) => data);
 };
 
-const addBoard = async ({ title, columns }) => {
+const addBoard = async ({ title, columns }: BoardType) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const board = new Board({ title, columns });
@@ -36,7 +37,7 @@ const addBoard = async ({ title, columns }) => {
   return promise.then((data) => data);
 };
 
-const updateBoard = async (id, { title, columns }) => {
+const updateBoard = async (id: string, { title, columns }: BoardType) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const indexBoard = boards.findIndex((board) => board.id === id);
@@ -48,7 +49,7 @@ const updateBoard = async (id, { title, columns }) => {
   return promise.then((data) => data);
 };
 
-const deleteBoard = async (id) => {
+const deleteBoard = async (id: string) => {
   const promise = new Promise((resolve) => {
     setTimeout(async () => {
       const indexBoard = boards.findIndex((board) => board.id === id);
@@ -64,7 +65,7 @@ const deleteBoard = async (id) => {
   return promise.then((data) => data);
 };
 
-module.exports = {
+export const boardsRepo = {
   getAllBoards,
   getBoardById,
   addBoard,

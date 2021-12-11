@@ -4,7 +4,7 @@ import Task from './task.model';
 const tasks: TaskType[] = [];
 
 const getAllTasks = async (boardId: string) => {
-  const promise = new Promise((resolve) => {
+  const promise = new Promise<TaskType[]>((resolve) => {
     setTimeout(() => {
       resolve(tasks.filter((task) => task.boardId === boardId));
     }, 20);
