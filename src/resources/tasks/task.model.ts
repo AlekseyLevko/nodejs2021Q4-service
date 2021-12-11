@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 
 class Task {
-  id: string;
-  title: string;
-  order: number;
-  description: string;
-  boardId: string | null;
-  userId: string | null;
-  columnId: string | null;
+  id;
+  title;
+  order;
+  description;
+  boardId;
+  userId;
+  columnId;
 
   constructor({
     id = uuidv4(),
@@ -15,9 +15,17 @@ class Task {
     order = 0,
     description = 'task description',
     boardId = '',
-    userId = '',
-    columnId = null,
-  } = {}) {
+    userId = null,
+    columnId = '',
+  }: {
+    id?: string;
+    title: string;
+    order: number;
+    description: string;
+    boardId: string;
+    userId: string | null;
+    columnId: string;
+  }) {
     this.id = id;
     this.title = title;
     this.order = order;
@@ -32,4 +40,4 @@ class Task {
   }
 }
 
-module.exports = Task;
+export default Task;
