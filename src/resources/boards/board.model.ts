@@ -15,8 +15,7 @@ class Board {
   }) {
     this.id = uuidv4();
     this.title = title;
-    // this.columns = columns.map((column) => ({ id: uuidv4(), ...column }));
-    this.columns = columns;
+    this.columns = columns.map((column) => ({ ...column, id: uuidv4() }));
   }
 }
 

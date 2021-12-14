@@ -1,11 +1,20 @@
-const userService = require('./user.service');
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { User } from '../../types';
+import { userService } from './user.service';
 
-const getAllUsers = async (req, reply) => {
+type CustomRequest = FastifyRequest<{
+  Params: {
+    userId: string;
+  };
+  Body: User;
+}>;
+
+const getAllUsers = async (req: FastifyRequest, reply: FastifyReply) => {
   const users = await userService.getAllUsers();
   reply.send(users);
 };
 
-const getUserById = async (req, reply) => {
+const getUserById = async (req: CustomRequest, reply: FastifyReply) => {
   const { userId } = req.params;
   const user = await userService.getUserById(userId);
   if (!user)
@@ -13,13 +22,13 @@ const getUserById = async (req, reply) => {
   reply.send(user);
 };
 
-const addUser = async (req, reply) => {
+const addUser = async (req: CustomRequest, reply: FastifyReply) => {
   const user = req.body;
   const newUser = await userService.addUser(user);
   reply.code(201).send(newUser);
 };
 
-const updateUser = async (req, reply) => {
+const updateUser = async (req: CustomRequest, reply: FastifyReply) => {
   const { userId } = req.params;
   const user = req.body;
   const updatedUser = await userService.updateUser(userId, user);
@@ -28,7 +37,7 @@ const updateUser = async (req, reply) => {
   reply.send(updatedUser);
 };
 
-const deleteUser = async (req, reply) => {
+const deleteUser = async (req: CustomRequest, reply: FastifyReply) => {
   const { userId } = req.params;
   const deletedUserIndex = await userService.deleteUser(userId);
   if (deletedUserIndex === -1)
@@ -36,4 +45,4 @@ const deleteUser = async (req, reply) => {
   reply.send({ message: ` user with id ${userId} has been deleted` });
 };
 
-module.exports = { getAllUsers, getUserById, addUser, updateUser, deleteUser };
+export { getAllUsers, getUserById, addUser, updateUser, deleteUser };

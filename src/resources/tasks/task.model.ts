@@ -10,7 +10,6 @@ class Task {
   columnId;
 
   constructor({
-    id = uuidv4(),
     title = 'task title',
     order = 0,
     description = 'task description',
@@ -18,7 +17,6 @@ class Task {
     userId = null,
     columnId = '',
   }: {
-    id?: string;
     title: string;
     order: number;
     description: string;
@@ -26,7 +24,7 @@ class Task {
     userId: string | null;
     columnId: string;
   }) {
-    this.id = id;
+    this.id = uuidv4();
     this.title = title;
     this.order = order;
     this.description = description;

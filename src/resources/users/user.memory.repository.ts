@@ -1,7 +1,8 @@
-const User = require('./user.model');
-const { tasksRepo } = require('../tasks/task.memory.repository');
+import { User as UserType } from '../../types';
+import { tasksRepo } from '../tasks/task.memory.repository';
+import User from './user.model';
 
-const users = [];
+const users: UserType[] = [];
 
 const getAllUsers = async () => {
   const promise = new Promise((resolve) => {
@@ -13,7 +14,7 @@ const getAllUsers = async () => {
   return promise.then((data) => data);
 };
 
-const getUserById = async (id) => {
+const getUserById = async (id: string) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const user = users.find((item) => item.id === id);
@@ -24,7 +25,7 @@ const getUserById = async (id) => {
   return promise.then((data) => data);
 };
 
-const addUser = async ({ name, login, password }) => {
+const addUser = async ({ name, login, password }: UserType) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const user = new User({ name, login, password });
@@ -36,7 +37,7 @@ const addUser = async ({ name, login, password }) => {
   return promise.then((data) => data);
 };
 
-const updateUser = async (id, { name, login, password }) => {
+const updateUser = async (id: string, { name, login, password }: UserType) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const indexUser = users.findIndex((user) => user.id === id);
@@ -48,7 +49,7 @@ const updateUser = async (id, { name, login, password }) => {
   return promise.then((data) => data);
 };
 
-const deleteUser = async (id) => {
+const deleteUser = async (id: string) => {
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       const indexUser = users.findIndex((user) => user.id === id);
@@ -63,4 +64,10 @@ const deleteUser = async (id) => {
   return promise.then((data) => data);
 };
 
-module.exports = { getAllUsers, getUserById, addUser, updateUser, deleteUser };
+export const usersRepo = {
+  getAllUsers,
+  getUserById,
+  addUser,
+  updateUser,
+  deleteUser,
+};

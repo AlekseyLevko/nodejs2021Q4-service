@@ -1,13 +1,19 @@
-interface Board {
+interface User {
   id: string;
-  title: string;
-  columns: Column[];
+  name: string;
+  login: string;
+  password: string;
 }
 
 interface Column {
   id: string;
   title: string;
   order: number;
+}
+interface Board {
+  id: string;
+  title: string;
+  columns: Column[];
 }
 
 interface Task {
@@ -18,6 +24,7 @@ interface Task {
   boardId: string | null;
   userId: string | null;
   columnId: string;
+  setNullToUserId: () => void;
 }
 
-export { Board, Column, Task };
+export { User, Board, Column, Task };

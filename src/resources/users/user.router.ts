@@ -1,12 +1,11 @@
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
-
-const {
+import {
+  addUser,
+  deleteUser,
   getAllUsers,
   getUserById,
-  addUser,
   updateUser,
-  deleteUser,
-} = require('./user.controller');
+} from './user.controller';
 
 const User = {
   type: 'object',
