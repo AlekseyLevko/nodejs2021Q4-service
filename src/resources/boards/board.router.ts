@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyServerOptions } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import {
   addBoard,
   deleteBoard,
@@ -94,18 +94,12 @@ const deleteBoardOpts = {
   handler: deleteBoard,
 };
 
-const boardRoutes = (
-  fastify: FastifyInstance,
-  options: FastifyServerOptions,
-  done: () => void
-) => {
+const boardRoutes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.get('/boards', getBoardsOpts);
   fastify.get('/boards/:boardId', getBoardOpts);
   fastify.post('/boards', postBoardOpts);
   fastify.put('/boards/:boardId', updateBoardOpts);
   fastify.delete('/boards/:boardId', deleteBoardOpts);
-
-  done();
 };
 
 export default boardRoutes;

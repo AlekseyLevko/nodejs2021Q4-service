@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyServerOptions } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import {
   addUser,
   deleteUser,
@@ -87,18 +87,12 @@ const deleteUserOpts = {
   handler: deleteUser,
 };
 
-const userRoutes = (
-  fastify: FastifyInstance,
-  options: FastifyServerOptions,
-  done: () => void
-) => {
+const userRoutes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.get('/users', getUsersOpts);
   fastify.get('/users/:userId', getUserOpts);
   fastify.post('/users', postUserOpts);
   fastify.put('/users/:userId', updateUserOpts);
   fastify.delete('/users/:userId', deleteUserOpts);
-
-  done();
 };
 
 export default userRoutes;

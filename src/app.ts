@@ -6,11 +6,15 @@ import userRoutes from './resources/users/user.router';
 
 const server = fastify({ logger: false });
 
-server.register(fastifySwagger as () => void, {
+server.register(fastifySwagger, {
   exposeRoute: true,
   routePrefix: '/doc',
   swagger: {
-    info: { title: 'fastify-api' },
+    info: {
+      title: 'rest-service',
+      description: 'REST service using Fastify & TypeScript',
+      version: '1.0.0',
+    },
   },
 });
 
