@@ -9,12 +9,28 @@ type CustomRequest = FastifyRequest<{
   Body: User;
 }>;
 
-const getAllUsers = async (req: FastifyRequest, reply: FastifyReply) => {
+/**
+ * Controller for getting all users
+ * @param req - fastify request
+ * @param reply - fastify reply
+ */
+const getAllUsers = async (
+  req: FastifyRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const users = await userService.getAllUsers();
   reply.send(users);
 };
 
-const getUserById = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for getting user by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const getUserById = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { userId } = req.params;
   const user = await userService.getUserById(userId);
   if (!user)
@@ -22,13 +38,29 @@ const getUserById = async (req: CustomRequest, reply: FastifyReply) => {
   reply.send(user);
 };
 
-const addUser = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for adding user
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const addUser = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const user = req.body;
   const newUser = await userService.addUser(user);
   reply.code(201).send(newUser);
 };
 
-const updateUser = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for updating user by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const updateUser = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { userId } = req.params;
   const user = req.body;
   const updatedUser = await userService.updateUser(userId, user);
@@ -37,7 +69,15 @@ const updateUser = async (req: CustomRequest, reply: FastifyReply) => {
   reply.send(updatedUser);
 };
 
-const deleteUser = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for deleting user by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const deleteUser = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { userId } = req.params;
   const deletedUserIndex = await userService.deleteUser(userId);
   if (deletedUserIndex === -1)

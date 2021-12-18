@@ -1,24 +1,23 @@
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * User class
+ */
 class User {
   id;
   name;
   login;
   password;
 
-  constructor({
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd',
-  }: {
-    name: string;
-    login: string;
-    password: string;
-  }) {
+  /**
+   *
+   * @param user - data to create new user
+   */
+  constructor(user: { name: string; login: string; password: string }) {
     this.id = uuidv4();
-    this.name = name;
-    this.login = login;
-    this.password = password;
+    this.name = user.name;
+    this.login = user.login;
+    this.password = user.password;
   }
 }
 

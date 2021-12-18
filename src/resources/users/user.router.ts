@@ -87,6 +87,10 @@ const deleteUserOpts = {
   handler: deleteUser,
 };
 
+/**
+ * Creating routes for user
+ * @param fastify - fastify instance
+ */
 const userRoutes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.get('/users', getUsersOpts);
   fastify.get('/users/:userId', getUserOpts);

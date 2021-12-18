@@ -95,6 +95,10 @@ const deleteTaskOpts = {
   handler: deleteTask,
 };
 
+/**
+ * Creating routes for task
+ * @param fastify - fastify instance
+ */
 const taskRoutes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.get('/boards/:boardId/tasks', getTasksOpts);
   fastify.get('/boards/:boardId/tasks/:taskId', getTaskOpts);

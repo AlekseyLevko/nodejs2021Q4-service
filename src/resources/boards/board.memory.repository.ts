@@ -4,8 +4,12 @@ import Board from './board.model';
 
 const boards: BoardType[] = [];
 
+/**
+ * Getting all boards from DB
+ * @returns all boards
+ */
 const getAllBoards = async () => {
-  const promise = new Promise((resolve) => {
+  const promise = new Promise<BoardType[]>((resolve) => {
     setTimeout(() => {
       resolve(boards);
     }, 20);
@@ -14,8 +18,13 @@ const getAllBoards = async () => {
   return promise.then((data) => data);
 };
 
+/**
+ * Getting board by id from DB
+ * @param id - board id
+ * @returns board found by id
+ */
 const getBoardById = async (id: string) => {
-  const promise = new Promise((resolve) => {
+  const promise = new Promise<Board | undefined>((resolve) => {
     setTimeout(() => {
       const board = boards.find((item) => item.id === id);
       resolve(board);
@@ -25,20 +34,33 @@ const getBoardById = async (id: string) => {
   return promise.then((data) => data);
 };
 
-const addBoard = async ({ title, columns }: BoardType) => {
-  const promise = new Promise((resolve) => {
+/**
+ * Adding new board to DB
+ * @param board - data for creating new board
+ * @returns created board
+ */
+const addBoard = async (board: BoardType) => {
+  const { title, columns } = board;
+  const promise = new Promise<BoardType>((resolve) => {
     setTimeout(() => {
-      const board = new Board({ title, columns });
-      boards.push(board);
-      resolve(board);
+      const newBoard = new Board({ title, columns });
+      boards.push(newBoard);
+      resolve(newBoard);
     }, 20);
   });
 
   return promise.then((data) => data);
 };
 
-const updateBoard = async (id: string, { title, columns }: BoardType) => {
-  const promise = new Promise((resolve) => {
+/**
+ * Updating board by id in DB
+ * @param id - board id
+ * @param updatedBoard - new board data to update
+ * @returns updated board
+ */
+const updateBoard = async (id: string, updatedBoard: BoardType) => {
+  const { title, columns } = updatedBoard;
+  const promise = new Promise<BoardType>((resolve) => {
     setTimeout(() => {
       const indexBoard = boards.findIndex((board) => board.id === id);
       boards[indexBoard] = { ...boards[indexBoard], title, columns };
@@ -49,8 +71,13 @@ const updateBoard = async (id: string, { title, columns }: BoardType) => {
   return promise.then((data) => data);
 };
 
+/**
+ * Deleting board from DB
+ * @param id - board id
+ * @returns index of deleted board
+ */
 const deleteBoard = async (id: string) => {
-  const promise = new Promise((resolve) => {
+  const promise = new Promise<number>((resolve) => {
     setTimeout(async () => {
       const indexBoard = boards.findIndex((board) => board.id === id);
       boards.splice(indexBoard, 1);

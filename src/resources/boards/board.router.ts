@@ -94,6 +94,10 @@ const deleteBoardOpts = {
   handler: deleteBoard,
 };
 
+/**
+ * Creating routes for board
+ * @param fastify - fastify instance
+ */
 const boardRoutes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.get('/boards', getBoardsOpts);
   fastify.get('/boards/:boardId', getBoardOpts);

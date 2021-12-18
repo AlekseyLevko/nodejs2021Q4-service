@@ -10,13 +10,29 @@ type CustomRequest = FastifyRequest<{
   Body: Task;
 }>;
 
-const getAllTasks = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for getting all tasks
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const getAllTasks = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId } = req.params;
   const tasks = await taskService.getAllTasks(boardId);
   reply.send(tasks);
 };
 
-const getTaskById = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for getting task by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const getTaskById = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId, taskId } = req.params;
   const task = await taskService.getTaskById(boardId, taskId);
   if (!task)
@@ -24,14 +40,30 @@ const getTaskById = async (req: CustomRequest, reply: FastifyReply) => {
   reply.send(task);
 };
 
-const addTask = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for adding task
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const addTask = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId } = req.params;
   const task = req.body;
   const newTask = await taskService.addTask(boardId, task);
   reply.code(201).send(newTask);
 };
 
-const updateTask = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for updating task by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const updateTask = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId, taskId } = req.params;
   const task = req.body;
   const updatedTask = await taskService.updateTask(boardId, taskId, task);
@@ -40,7 +72,15 @@ const updateTask = async (req: CustomRequest, reply: FastifyReply) => {
   reply.send(updatedTask);
 };
 
-const deleteTask = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for deleting task by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const deleteTask = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { taskId } = req.params;
   const deletedTaskIndex = await taskService.deleteTask(taskId);
   if (deletedTaskIndex === -1)

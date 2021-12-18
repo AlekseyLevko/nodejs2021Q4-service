@@ -1,5 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * Task class
+ */
 class Task {
   id;
   title;
@@ -9,14 +12,11 @@ class Task {
   userId;
   columnId;
 
-  constructor({
-    title = 'task title',
-    order = 0,
-    description = 'task description',
-    boardId = '',
-    userId = null,
-    columnId = '',
-  }: {
+  /**
+   * Task constructor
+   * @param task - data to create new task
+   */
+  constructor(task: {
     title: string;
     order: number;
     description: string;
@@ -25,14 +25,17 @@ class Task {
     columnId: string;
   }) {
     this.id = uuidv4();
-    this.title = title;
-    this.order = order;
-    this.description = description;
-    this.userId = userId;
-    this.boardId = boardId;
-    this.columnId = columnId;
+    this.title = task.title;
+    this.order = task.order;
+    this.description = task.description;
+    this.userId = task.userId;
+    this.boardId = task.boardId;
+    this.columnId = task.columnId;
   }
 
+  /**
+   * Set null to userId field
+   */
   setNullToUserId() {
     this.userId = null;
   }

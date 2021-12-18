@@ -9,12 +9,28 @@ type CustomRequest = FastifyRequest<{
   Body: Board;
 }>;
 
-const getAllBoards = async (req: FastifyRequest, reply: FastifyReply) => {
+/**
+ * Controller for getting all boards
+ * @param req - fastify request
+ * @param reply - fastify reply
+ */
+const getAllBoards = async (
+  req: FastifyRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const boards = await boardService.getAllBoards();
   reply.send(boards);
 };
 
-const getBoardById = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for getting board by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const getBoardById = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId } = req.params;
   const board = await boardService.getBoardById(boardId);
   if (!board)
@@ -22,13 +38,29 @@ const getBoardById = async (req: CustomRequest, reply: FastifyReply) => {
   reply.send(board);
 };
 
-const addBoard = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for adding board
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const addBoard = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const board = req.body;
   const newBoard = await boardService.addBoard(board);
   reply.code(201).send(newBoard);
 };
 
-const updateBoard = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for updating board by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const updateBoard = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId } = req.params;
   const board = req.body;
   const updatedBoard = await boardService.updateBoard(boardId, board);
@@ -37,7 +69,15 @@ const updateBoard = async (req: CustomRequest, reply: FastifyReply) => {
   reply.send(updatedBoard);
 };
 
-const deleteBoard = async (req: CustomRequest, reply: FastifyReply) => {
+/**
+ * Controller for deleting board by id
+ * @param req - custom request based on fastify request
+ * @param reply - fastify reply
+ */
+const deleteBoard = async (
+  req: CustomRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId } = req.params;
   const deletedBoardIndex = await boardService.deleteBoard(boardId);
   if (deletedBoardIndex === -1)
