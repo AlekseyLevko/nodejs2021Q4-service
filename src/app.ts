@@ -1,12 +1,19 @@
 import fastify from 'fastify';
 import fastifySwagger from 'fastify-swagger';
+import { logger } from './logger';
 import boardRoutes from './resources/boards/board.router';
 import taskRoutes from './resources/tasks/task.router';
 import userRoutes from './resources/users/user.router';
 
-const server = fastify({ logger: false });
+const app = fastify({ logger });
 
-server.register(fastifySwagger, {
+app.addHook('preHandler', async (req) => {
+  if (req.body) {
+    req.log.info({ parameters: req.params, body: req.body });
+  }
+});
+
+app.register(fastifySwagger, {
   exposeRoute: true,
   routePrefix: '/doc',
   swagger: {
@@ -18,8 +25,8 @@ server.register(fastifySwagger, {
   },
 });
 
-server.register(userRoutes);
-server.register(boardRoutes);
-server.register(taskRoutes);
+app.register(userRoutes);
+app.register(boardRoutes);
+app.register(taskRoutes);
 
-export default server;
+export default app;
