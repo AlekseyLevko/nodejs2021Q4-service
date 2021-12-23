@@ -17,10 +17,10 @@ git clone {repository URL}
 npm install
 ```
 
-## Switch to the task4 branch
+## Switch to the task6 branch
 
 ```
-git checkout task5
+git checkout task6
 ```
 
 ## Running application
