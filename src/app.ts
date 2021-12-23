@@ -5,12 +5,20 @@ import boardRoutes from './resources/boards/board.router';
 import taskRoutes from './resources/tasks/task.router';
 import userRoutes from './resources/users/user.router';
 
+process.on('uncaughtException', (err) => {
+  logger.error(err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason) => {
+  logger.error(reason);
+  process.exit(1);
+});
+
 const app = fastify({ logger });
 
 app.addHook('preHandler', async (req) => {
-  if (req.body) {
-    req.log.info({ parameters: req.params, body: req.body });
-  }
+  req.log.info({ params: req.params, query: req.query, body: req.body });
 });
 
 app.register(fastifySwagger, {
