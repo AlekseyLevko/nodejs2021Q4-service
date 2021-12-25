@@ -6,12 +6,12 @@ import taskRoutes from './resources/tasks/task.router';
 import userRoutes from './resources/users/user.router';
 
 process.on('uncaughtException', (err) => {
-  logger.error(err);
+  logger.error(err, 'uncaughtException');
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason) => {
-  logger.error(reason);
+  logger.error(reason, 'unhandledRejection');
   process.exit(1);
 });
 
