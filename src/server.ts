@@ -5,9 +5,9 @@ import { logger } from './logger';
 const { PORT } = config;
 
 try {
-  app.listen(PORT, () =>
-    logger.info(`App is running on http://localhost:${PORT}`)
-  );
+  app.listen(PORT, '0.0.0.0', () => {
+    logger.info(`App is running on http://localhost:${PORT}`);
+  });
 } catch (err) {
   app.log.error(err);
   process.exit(1);
