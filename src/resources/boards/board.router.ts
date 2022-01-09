@@ -1,10 +1,11 @@
-const {
+import { FastifyInstance } from 'fastify';
+import {
+  addBoard,
+  deleteBoard,
   getAllBoards,
   getBoardById,
-  addBoard,
   updateBoard,
-  deleteBoard,
-} = require('./board.controller');
+} from './board.controller';
 
 const Column = {
   type: 'object',
@@ -93,14 +94,16 @@ const deleteBoardOpts = {
   handler: deleteBoard,
 };
 
-const boardRoutes = (fastify, options, done) => {
+/**
+ * Creating routes for board
+ * @param fastify - fastify instance
+ */
+const boardRoutes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.get('/boards', getBoardsOpts);
   fastify.get('/boards/:boardId', getBoardOpts);
   fastify.post('/boards', postBoardOpts);
   fastify.put('/boards/:boardId', updateBoardOpts);
   fastify.delete('/boards/:boardId', deleteBoardOpts);
-
-  done();
 };
 
-module.exports = boardRoutes;
+export default boardRoutes;

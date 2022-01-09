@@ -1,26 +1,46 @@
-# RS School REST service
+# RS School REST service. Task 7. Docker basics
 
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Docker - [Download & Install Docker Engine](https://docs.docker.com/engine/install/)
+- Docker Compose - [Download & Install Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone git@github.com:AlekseyLevko/nodejs2021Q4-service.git
 ```
 
-## Installing NPM modules
+## Switch to the task7 branch
+
+```
+git checkout task7
+```
+
+## Running an application using docker
+
+```
+docker-compose up
+```
+
+## For Testing
 
 ```
 npm install
 ```
 
-## Switch to the task4 branch
+```
+npm test
+```
+
+# Using app without docker
+
+## Installing NPM modules
 
 ```
-git checkout task4
+npm install
 ```
 
 ## Running application
@@ -59,6 +79,12 @@ To run only specific test suite with authorization (users, boards or tasks)
 
 ```
 npm run test:auth <suite name>
+```
+
+## Building application
+
+```
+npm run build
 ```
 
 ## Development
