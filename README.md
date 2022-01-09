@@ -1,6 +1,4 @@
-# RS School REST service
-
-# Task 7. Docker basics
+# RS School REST service. Task 7. Docker basics
 
 ## Prerequisites
 
@@ -26,6 +24,8 @@ git checkout task7
 ```
 docker-compose up
 ```
+
+# Using app without docker
 
 ## Installing NPM modules
 
