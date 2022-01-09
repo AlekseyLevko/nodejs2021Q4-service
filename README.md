@@ -25,6 +25,16 @@ git checkout task7
 docker-compose up
 ```
 
+## For Testing
+
+```
+npm install
+```
+
+```
+npm test
+```
+
 # Using app without docker
 
 ## Installing NPM modules
