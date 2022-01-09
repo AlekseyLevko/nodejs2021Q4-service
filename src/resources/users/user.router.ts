@@ -1,10 +1,11 @@
-const {
+import { FastifyInstance } from 'fastify';
+import {
+  addUser,
+  deleteUser,
   getAllUsers,
   getUserById,
-  addUser,
   updateUser,
-  deleteUser,
-} = require('./user.controller');
+} from './user.controller';
 
 const User = {
   type: 'object',
@@ -86,14 +87,16 @@ const deleteUserOpts = {
   handler: deleteUser,
 };
 
-const userRoutes = (fastify, options, done) => {
+/**
+ * Creating routes for user
+ * @param fastify - fastify instance
+ */
+const userRoutes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.get('/users', getUsersOpts);
   fastify.get('/users/:userId', getUserOpts);
   fastify.post('/users', postUserOpts);
   fastify.put('/users/:userId', updateUserOpts);
   fastify.delete('/users/:userId', deleteUserOpts);
-
-  done();
 };
 
-module.exports = userRoutes;
+export default userRoutes;
