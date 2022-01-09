@@ -1,8 +1,9 @@
-version: '3.0'
+version: '3'
 services:
   node:
     build: .
     container_name: server
+    restart: on-failure
     ports:
       - ${PORT}:${PORT}
     networks:
@@ -11,6 +12,9 @@ services:
       - postgres
     volumes:
       - node:/usr/app/logs
+      - type: bind
+        source: ./src
+        target: /usr/app/src
   postgres:
     build: ./database/
     container_name: database
