@@ -20,7 +20,7 @@ npm install
 ## Switch to the task4 branch
 
 ```
-git checkout task4
+git checkout task5
 ```
 
 ## Running application
@@ -59,6 +59,12 @@ To run only specific test suite with authorization (users, boards or tasks)
 
 ```
 npm run test:auth <suite name>
+```
+
+## Building application
+
+```
+npm run build
 ```
 
 ## Development
