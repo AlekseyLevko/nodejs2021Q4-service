@@ -1,5 +1,6 @@
 import fastify from 'fastify';
 import fastifySwagger from 'fastify-swagger';
+import 'reflect-metadata';
 import { logger } from './logger';
 import boardRoutes from './resources/boards/board.router';
 import taskRoutes from './resources/tasks/task.router';
@@ -32,7 +33,6 @@ app.register(fastifySwagger, {
     },
   },
 });
-
 app.register(userRoutes);
 app.register(boardRoutes);
 app.register(taskRoutes);

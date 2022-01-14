@@ -1,18 +1,18 @@
-import { User } from '../../types';
+import { IUser } from '../../types';
 import { usersRepo } from './user.memory.repository';
 
 /**
  * Service for getting all users
  * @returns all users
  */
-const getAllUsers = (): Promise<User[]> => usersRepo.getAllUsers();
+const getAllUsers = (): Promise<IUser[]> => usersRepo.getAllUsers();
 
 /**
  * Service for getting user by id
  * @param userId - user id
  * @returns user found by id
  */
-const getUserById = (userId: string): Promise<User | undefined> =>
+const getUserById = (userId: string): Promise<IUser | undefined> =>
   usersRepo.getUserById(userId);
 
 /**
@@ -20,7 +20,7 @@ const getUserById = (userId: string): Promise<User | undefined> =>
  * @param user - data for creating new user
  * @returns created user
  */
-const addUser = (user: User): Promise<User> => usersRepo.addUser(user);
+const addUser = (user: IUser): Promise<IUser> => usersRepo.addUser(user);
 
 /**
  * Service for updating user by id
@@ -28,7 +28,7 @@ const addUser = (user: User): Promise<User> => usersRepo.addUser(user);
  * @param user - new user data to update
  * @returns updated user
  */
-const updateUser = (userId: string, user: User): Promise<User> =>
+const updateUser = (userId: string, user: IUser): Promise<IUser | undefined> =>
   usersRepo.updateUser(userId, user);
 
 /**

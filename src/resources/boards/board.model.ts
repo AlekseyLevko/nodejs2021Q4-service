@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Column } from '../../types';
+import { IColumn } from '../../types';
 
 /**
  * Board model
@@ -13,7 +13,7 @@ class Board {
    * Board constructor
    * @param board - data to create new board
    */
-  constructor(board: { title: string; columns: Column[] }) {
+  constructor(board: { title: string; columns: IColumn[] }) {
     this.id = uuidv4();
     this.title = board.title;
     this.columns = board.columns.map((column) => ({ ...column, id: uuidv4() }));

@@ -1,12 +1,12 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { Board } from '../../types';
+import { IBoard } from '../../types';
 import { boardService } from './board.service';
 
 type CustomRequest = FastifyRequest<{
   Params: {
     boardId: string;
   };
-  Body: Board;
+  Body: IBoard;
 }>;
 
 /**

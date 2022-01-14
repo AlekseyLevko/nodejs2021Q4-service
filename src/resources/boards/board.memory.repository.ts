@@ -1,15 +1,15 @@
-import { Board as BoardType } from '../../types';
+import { IBoard } from '../../types';
 import { tasksRepo } from '../tasks/task.memory.repository';
 import Board from './board.model';
 
-const boards: BoardType[] = [];
+const boards: IBoard[] = [];
 
 /**
  * Getting all boards from DB
  * @returns all boards
  */
 const getAllBoards = async () => {
-  const promise = new Promise<BoardType[]>((resolve) => {
+  const promise = new Promise<IBoard[]>((resolve) => {
     setTimeout(() => {
       resolve(boards);
     }, 20);
@@ -39,9 +39,9 @@ const getBoardById = async (id: string) => {
  * @param board - data for creating new board
  * @returns created board
  */
-const addBoard = async (board: BoardType) => {
+const addBoard = async (board: IBoard) => {
   const { title, columns } = board;
-  const promise = new Promise<BoardType>((resolve) => {
+  const promise = new Promise<IBoard>((resolve) => {
     setTimeout(() => {
       const newBoard = new Board({ title, columns });
       boards.push(newBoard);
@@ -58,9 +58,9 @@ const addBoard = async (board: BoardType) => {
  * @param updatedBoard - new board data to update
  * @returns updated board
  */
-const updateBoard = async (id: string, updatedBoard: BoardType) => {
+const updateBoard = async (id: string, updatedBoard: IBoard) => {
   const { title, columns } = updatedBoard;
-  const promise = new Promise<BoardType>((resolve) => {
+  const promise = new Promise<IBoard>((resolve) => {
     setTimeout(() => {
       const indexBoard = boards.findIndex((board) => board.id === id);
       boards[indexBoard] = { ...boards[indexBoard], title, columns };

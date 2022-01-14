@@ -1,12 +1,12 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { User } from '../../types';
+import { IUser } from '../../types';
 import { userService } from './user.service';
 
 type CustomRequest = FastifyRequest<{
   Params: {
     userId: string;
   };
-  Body: User;
+  Body: IUser;
 }>;
 
 /**

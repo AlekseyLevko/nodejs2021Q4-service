@@ -1,18 +1,18 @@
-import { Board } from '../../types';
+import { IBoard } from '../../types';
 import { boardsRepo } from './board.memory.repository';
 
 /**
  * Service for getting all boards
  * @returns all boards
  */
-const getAllBoards = (): Promise<Board[]> => boardsRepo.getAllBoards();
+const getAllBoards = (): Promise<IBoard[]> => boardsRepo.getAllBoards();
 
 /**
  * Service for getting board by id
  * @param boardId - board id
  * @returns board found by id
  */
-const getBoardById = (boardId: string): Promise<Board | undefined> =>
+const getBoardById = (boardId: string): Promise<IBoard | undefined> =>
   boardsRepo.getBoardById(boardId);
 
 /**
@@ -20,7 +20,7 @@ const getBoardById = (boardId: string): Promise<Board | undefined> =>
  * @param board - data for creating new board
  * @returns created board
  */
-const addBoard = (board: Board): Promise<Board> => boardsRepo.addBoard(board);
+const addBoard = (board: IBoard): Promise<IBoard> => boardsRepo.addBoard(board);
 
 /**
  * Service for updating board by id
@@ -28,7 +28,7 @@ const addBoard = (board: Board): Promise<Board> => boardsRepo.addBoard(board);
  * @param board - new board data to update
  * @returns updated board
  */
-const updateBoard = (boardId: string, board: Board): Promise<Board> =>
+const updateBoard = (boardId: string, board: IBoard): Promise<IBoard> =>
   boardsRepo.updateBoard(boardId, board);
 
 /**
