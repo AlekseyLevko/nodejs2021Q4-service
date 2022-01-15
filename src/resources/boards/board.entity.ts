@@ -1,16 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class Board {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
-  name!: string;
+  title!: string;
 
-  @Column()
-  login!: string;
-
-  @Column()
-  password!: string;
+  @Column('jsonb')
+  columns!: { id: string; title: string; order: number }[];
 }

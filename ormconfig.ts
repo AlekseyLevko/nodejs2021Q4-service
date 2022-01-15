@@ -1,4 +1,6 @@
 import { config } from './src/common/config';
+import { Board } from './src/resources/boards/board.entity';
+import { Task } from './src/resources/tasks/task.entity';
 import { User } from './src/resources/users/user.entity';
 
 export default {
@@ -9,6 +11,6 @@ export default {
   password: config.POSTGRES_PASSWORD,
   synchronize: config.POSTGRES_SYNCHRONIZE,
   database: config.POSTGRES_USERNAME,
-  entities: [User],
+  entities: [User, Board, Task],
   logging: false,
 };

@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { IUser } from '../../types';
+import { User as IUser } from './user.entity';
 import { userService } from './user.service';
 
 type CustomRequest = FastifyRequest<{

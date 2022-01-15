@@ -1,39 +1,25 @@
-import { Task as TaskType } from '../../types';
-import Task from './task.model';
-
-const tasks: TaskType[] = [];
+import { getRepository } from 'typeorm';
+import { v4 as uuid } from 'uuid';
+import { Task as TaskEntity } from './task.entity';
 
 /**
  * Getting all task from DB
  * @param boardId - board id
  * @returns all tasks
  */
-const getAllTasks = async (boardId: string) => {
-  const promise = new Promise<TaskType[]>((resolve) => {
-    setTimeout(() => {
-      resolve(tasks.filter((task) => task.boardId === boardId));
-    }, 20);
-  });
 
-  return promise.then((data) => data);
-};
+const getAllTasks = async (boardId: string) =>
+  (await getRepository(TaskEntity).find()).filter(
+    (task) => task.boardId === boardId
+  );
 
 /**
  * Getting task by id from DB
  * @param boardId - board id
- * @param taskId - task id
+ * @param id - task id
  * @returns task found by id
  */
-const getTaskById = async (boardId: string, taskId: string) => {
-  const promise = new Promise<TaskType | undefined>((resolve) => {
-    setTimeout(() => {
-      const task = tasks.find((item) => item.id === taskId);
-      resolve(task);
-    }, 20);
-  });
-
-  return promise.then((data) => data);
-};
+const getTaskById = async (id: string) => getRepository(TaskEntity).findOne(id);
 
 /**
  * Adding new task to DB
@@ -41,24 +27,10 @@ const getTaskById = async (boardId: string, taskId: string) => {
  * @param task - data for creating new task
  * @returns
  */
-const addTask = async (boardId: string, task: TaskType) => {
-  const { title, order, description, userId, columnId } = task;
-  const promise = new Promise<TaskType>((resolve) => {
-    setTimeout(() => {
-      const newTask = new Task({
-        title,
-        order,
-        description,
-        boardId,
-        userId,
-        columnId,
-      });
-      tasks.push(newTask);
-      resolve(newTask);
-    }, 20);
-  });
-
-  return promise.then((data) => data);
+const addTask = async (boardId: string, task: TaskEntity) => {
+  const taskRepository = getRepository(TaskEntity);
+  const newTask = taskRepository.create({ ...task, boardId, id: uuid() });
+  return taskRepository.save(newTask);
 };
 
 /**
@@ -71,26 +43,15 @@ const addTask = async (boardId: string, task: TaskType) => {
 const updateTask = async (
   boardId: string,
   taskId: string,
-  updatedTask: TaskType
+  updatedTask: TaskEntity
 ) => {
-  const { title, order, description, userId, columnId } = updatedTask;
-  const promise = new Promise<TaskType>((resolve) => {
-    setTimeout(() => {
-      const indexTask = tasks.findIndex((task) => task.id === taskId);
-      tasks[indexTask] = {
-        ...tasks[indexTask],
-        boardId,
-        title,
-        order,
-        description,
-        userId,
-        columnId,
-      };
-      resolve(tasks[indexTask]);
-    }, 20);
-  });
-
-  return promise.then((data) => data);
+  const taskRepository = getRepository(TaskEntity);
+  const task = await taskRepository.findOne(taskId);
+  if (task) {
+    taskRepository.merge(task, updatedTask);
+    await taskRepository.save(task);
+  }
+  return task;
 };
 
 /**
@@ -99,20 +60,11 @@ const updateTask = async (
  * @returns index of deleted task
  */
 const deleteTask = async (id: string) => {
-  const promise = new Promise<number>((resolve) => {
-    setTimeout(() => {
-      const indexTask = tasks.findIndex((task) => task.id === id);
-      tasks.splice(indexTask, 1);
-
-      resolve(indexTask);
-    }, 20);
-  });
-
-  return promise.then((data) => data);
+  const results = await getRepository(TaskEntity).delete(id);
+  return Number(results.affected);
 };
 
 export const tasksRepo = {
-  tasks,
   getAllTasks,
   getTaskById,
   addTask,

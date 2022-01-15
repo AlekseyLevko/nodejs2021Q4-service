@@ -1,28 +1,27 @@
 import { getRepository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { IUser } from '../../types';
-import { User as UserEntity } from './user.entity';
+import { User } from './user.entity';
 
 /**
  * Getting all users from DB
  * @returns all users
  */
-const getAllUsers = () => getRepository(UserEntity).find();
+const getAllUsers = () => getRepository(User).find();
 
 /**
  * Getting user by id from DB
  * @param id - user id
  * @returns user found by id
  */
-const getUserById = async (id: string) => getRepository(UserEntity).findOne(id);
+const getUserById = (id: string) => getRepository(User).findOne(id);
 
 /**
  * Adding new user to DB
  * @param user - data for creating new user
  * @returns created user
  */
-const addUser = async (user: IUser) => {
-  const userRepository = getRepository(UserEntity);
+const addUser = (user: User) => {
+  const userRepository = getRepository(User);
   const newUser = userRepository.create({
     ...user,
     id: uuid(),
@@ -36,8 +35,8 @@ const addUser = async (user: IUser) => {
  * @param updatedUser - new user data to update
  * @returns updated user
  */
-const updateUser = async (id: string, updatedUser: IUser) => {
-  const userRepository = getRepository(UserEntity);
+const updateUser = async (id: string, updatedUser: User) => {
+  const userRepository = getRepository(User);
   const user = await userRepository.findOne(id);
   if (user) {
     userRepository.merge(user, updatedUser);
@@ -53,7 +52,7 @@ const updateUser = async (id: string, updatedUser: IUser) => {
  * @returns index of deleted user
  */
 const deleteUser = async (id: string) => {
-  const results = await getRepository(UserEntity).delete(id);
+  const results = await getRepository(User).delete(id);
   return Number(results.affected);
 };
 

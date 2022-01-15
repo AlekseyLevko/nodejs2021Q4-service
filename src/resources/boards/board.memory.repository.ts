@@ -1,55 +1,29 @@
-import { IBoard } from '../../types';
-import { tasksRepo } from '../tasks/task.memory.repository';
-import Board from './board.model';
-
-const boards: IBoard[] = [];
+import { getRepository } from 'typeorm';
+import { v4 as uuid } from 'uuid';
+import { Board } from './board.entity';
 
 /**
  * Getting all boards from DB
  * @returns all boards
  */
-const getAllBoards = async () => {
-  const promise = new Promise<IBoard[]>((resolve) => {
-    setTimeout(() => {
-      resolve(boards);
-    }, 20);
-  });
-
-  return promise.then((data) => data);
-};
+const getAllBoards = () => getRepository(Board).find();
 
 /**
  * Getting board by id from DB
  * @param id - board id
  * @returns board found by id
  */
-const getBoardById = async (id: string) => {
-  const promise = new Promise<Board | undefined>((resolve) => {
-    setTimeout(() => {
-      const board = boards.find((item) => item.id === id);
-      resolve(board);
-    }, 20);
-  });
-
-  return promise.then((data) => data);
-};
+const getBoardById = (id: string) => getRepository(Board).findOne(id);
 
 /**
  * Adding new board to DB
  * @param board - data for creating new board
  * @returns created board
  */
-const addBoard = async (board: IBoard) => {
-  const { title, columns } = board;
-  const promise = new Promise<IBoard>((resolve) => {
-    setTimeout(() => {
-      const newBoard = new Board({ title, columns });
-      boards.push(newBoard);
-      resolve(newBoard);
-    }, 20);
-  });
-
-  return promise.then((data) => data);
+const addBoard = (board: Board) => {
+  const boardRepository = getRepository(Board);
+  const newBoard = boardRepository.create({ ...board, id: uuid() });
+  return boardRepository.save(newBoard);
 };
 
 /**
@@ -58,17 +32,15 @@ const addBoard = async (board: IBoard) => {
  * @param updatedBoard - new board data to update
  * @returns updated board
  */
-const updateBoard = async (id: string, updatedBoard: IBoard) => {
-  const { title, columns } = updatedBoard;
-  const promise = new Promise<IBoard>((resolve) => {
-    setTimeout(() => {
-      const indexBoard = boards.findIndex((board) => board.id === id);
-      boards[indexBoard] = { ...boards[indexBoard], title, columns };
-      resolve(boards[indexBoard]);
-    }, 20);
-  });
+const updateBoard = async (id: string, updatedBoard: Board) => {
+  const boardRepository = getRepository(Board);
+  const board = await boardRepository.findOne(id);
+  if (board) {
+    boardRepository.merge(board, updatedBoard);
+    await boardRepository.save(board);
+  }
 
-  return promise.then((data) => data);
+  return board;
 };
 
 /**
@@ -77,19 +49,8 @@ const updateBoard = async (id: string, updatedBoard: IBoard) => {
  * @returns index of deleted board
  */
 const deleteBoard = async (id: string) => {
-  const promise = new Promise<number>((resolve) => {
-    setTimeout(async () => {
-      const indexBoard = boards.findIndex((board) => board.id === id);
-      boards.splice(indexBoard, 1);
-      const tasks = await tasksRepo.getAllTasks(id);
-      tasks.forEach(
-        (task) => task.boardId === id && tasksRepo.deleteTask(task.id)
-      );
-      resolve(indexBoard);
-    }, 20);
-  });
-
-  return promise.then((data) => data);
+  const results = await getRepository(Board).delete(id);
+  return Number(results.affected);
 };
 
 export const boardsRepo = {

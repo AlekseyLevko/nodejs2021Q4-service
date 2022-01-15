@@ -1,4 +1,4 @@
-import { Task } from '../../types';
+import { Task as ITask } from './task.entity';
 import { tasksRepo } from './task.memory.repository';
 
 /**
@@ -6,7 +6,7 @@ import { tasksRepo } from './task.memory.repository';
  * @param boardId - board id
  * @returns all tasks
  */
-const getAllTasks = (boardId: string): Promise<Task[]> =>
+const getAllTasks = (boardId: string): Promise<ITask[]> =>
   tasksRepo.getAllTasks(boardId);
 
 /**
@@ -15,10 +15,8 @@ const getAllTasks = (boardId: string): Promise<Task[]> =>
  * @param taskId - task id
  * @returns task found by id
  */
-const getTaskById = (
-  boardId: string,
-  taskId: string
-): Promise<Task | undefined> => tasksRepo.getTaskById(boardId, taskId);
+const getTaskById = (taskId: string): Promise<ITask | undefined> =>
+  tasksRepo.getTaskById(taskId);
 
 /**
  * Service for adding new task
@@ -26,7 +24,7 @@ const getTaskById = (
  * @param task - data for creating new task
  * @returns created task
  */
-const addTask = (boardId: string, task: Task): Promise<Task> =>
+const addTask = (boardId: string, task: ITask): Promise<ITask> =>
   tasksRepo.addTask(boardId, task);
 
 /**
@@ -39,8 +37,8 @@ const addTask = (boardId: string, task: Task): Promise<Task> =>
 const updateTask = (
   boardId: string,
   taskId: string,
-  task: Task
-): Promise<Task> => tasksRepo.updateTask(boardId, taskId, task);
+  task: ITask
+): Promise<ITask | undefined> => tasksRepo.updateTask(boardId, taskId, task);
 
 /**
  * Service for deleting task by id

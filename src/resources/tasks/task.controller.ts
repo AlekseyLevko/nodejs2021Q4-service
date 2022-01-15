@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { Task } from '../../types';
+import { Task } from './task.entity';
 import { taskService } from './task.service';
 
 type CustomRequest = FastifyRequest<{
@@ -33,8 +33,8 @@ const getTaskById = async (
   req: CustomRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  const { boardId, taskId } = req.params;
-  const task = await taskService.getTaskById(boardId, taskId);
+  const { taskId } = req.params;
+  const task = await taskService.getTaskById(taskId);
   if (!task)
     reply.code(404).send({ message: `task with id ${taskId} not found` });
   reply.send(task);

@@ -1,4 +1,4 @@
-import { IUser } from '../../types';
+import { User as IUser } from './user.entity';
 import { usersRepo } from './user.memory.repository';
 
 /**

@@ -1,4 +1,4 @@
-import { IBoard } from '../../types';
+import { Board as IBoard } from './board.entity';
 import { boardsRepo } from './board.memory.repository';
 
 /**
@@ -28,8 +28,10 @@ const addBoard = (board: IBoard): Promise<IBoard> => boardsRepo.addBoard(board);
  * @param board - new board data to update
  * @returns updated board
  */
-const updateBoard = (boardId: string, board: IBoard): Promise<IBoard> =>
-  boardsRepo.updateBoard(boardId, board);
+const updateBoard = (
+  boardId: string,
+  board: IBoard
+): Promise<IBoard | undefined> => boardsRepo.updateBoard(boardId, board);
 
 /**
  * Service for deleting board by id

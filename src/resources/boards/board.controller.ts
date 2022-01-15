@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { IBoard } from '../../types';
+import { Board as IBoard } from './board.entity';
 import { boardService } from './board.service';
 
 type CustomRequest = FastifyRequest<{
