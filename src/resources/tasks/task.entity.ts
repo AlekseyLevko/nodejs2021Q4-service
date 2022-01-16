@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Board } from '../boards/board.entity';
 
 @Entity()
 export class Task {
@@ -22,4 +23,9 @@ export class Task {
 
   @Column({ type: 'uuid', nullable: true })
   columnId!: string | null;
+
+  @ManyToOne(() => Board, (board) => board.columns, {
+    createForeignKeyConstraints: false,
+  })
+  board?: Board;
 }

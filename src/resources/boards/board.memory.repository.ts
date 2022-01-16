@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { Task } from '../tasks/task.entity';
 import { Board } from './board.entity';
 
 /**
@@ -50,6 +51,9 @@ const updateBoard = async (id: string, updatedBoard: Board) => {
  */
 const deleteBoard = async (id: string) => {
   const results = await getRepository(Board).delete(id);
+
+  const taskRepository = getRepository(Task);
+  taskRepository.delete({ boardId: id });
   return Number(results.affected);
 };
 
