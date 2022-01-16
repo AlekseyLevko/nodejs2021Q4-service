@@ -64,9 +64,9 @@ const updateTask = async (
   req: CustomRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  const { boardId, taskId } = req.params;
+  const { taskId } = req.params;
   const task = req.body;
-  const updatedTask = await taskService.updateTask(boardId, taskId, task);
+  const updatedTask = await taskService.updateTask(taskId, task);
   if (!updatedTask)
     reply.code(404).send({ message: `task with id ${taskId} not found` });
   reply.send(updatedTask);

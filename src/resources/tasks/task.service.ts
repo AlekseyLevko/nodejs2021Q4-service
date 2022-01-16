@@ -11,7 +11,6 @@ const getAllTasks = (boardId: string): Promise<ITask[]> =>
 
 /**
  * Service for getting task by id
- * @param boardId - board id
  * @param taskId - task id
  * @returns task found by id
  */
@@ -29,16 +28,12 @@ const addTask = (boardId: string, task: ITask): Promise<ITask> =>
 
 /**
  * Service for updating task by id
- * @param boardId - board id
  * @param taskId - task id
  * @param task - new task data to update
  * @returns updated task
  */
-const updateTask = (
-  boardId: string,
-  taskId: string,
-  task: ITask
-): Promise<ITask | undefined> => tasksRepo.updateTask(boardId, taskId, task);
+const updateTask = (taskId: string, task: ITask): Promise<ITask | undefined> =>
+  tasksRepo.updateTask(taskId, task);
 
 /**
  * Service for deleting task by id

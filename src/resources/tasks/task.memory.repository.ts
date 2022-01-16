@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { Board } from '../boards/board.entity';
 import { Task as TaskEntity } from './task.entity';
 
 /**
@@ -15,7 +16,6 @@ const getAllTasks = async (boardId: string) =>
 
 /**
  * Getting task by id from DB
- * @param boardId - board id
  * @param id - task id
  * @returns task found by id
  */
@@ -30,21 +30,17 @@ const getTaskById = async (id: string) => getRepository(TaskEntity).findOne(id);
 const addTask = async (boardId: string, task: TaskEntity) => {
   const taskRepository = getRepository(TaskEntity);
   const newTask = taskRepository.create({ ...task, boardId, id: uuid() });
+  newTask.board = await getRepository(Board).findOne(boardId);
   return taskRepository.save(newTask);
 };
 
 /**
  * Updating task by id in DB
- * @param boardId - board id
  * @param taskId - task id
  * @param updatedTask - new task data to update
  * @returns updated task
  */
-const updateTask = async (
-  boardId: string,
-  taskId: string,
-  updatedTask: TaskEntity
-) => {
+const updateTask = async (taskId: string, updatedTask: TaskEntity) => {
   const taskRepository = getRepository(TaskEntity);
   const task = await taskRepository.findOne(taskId);
   if (task) {
