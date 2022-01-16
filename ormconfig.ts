@@ -11,6 +11,6 @@ export default {
   password: config.POSTGRES_PASSWORD,
   synchronize: config.POSTGRES_SYNCHRONIZE,
   database: config.POSTGRES_USERNAME,
+  logging: config.POSTGRES_LOGGING,
   entities: [User, Board, Task],
-  logging: false,
 };
