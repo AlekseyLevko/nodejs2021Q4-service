@@ -1,10 +1,11 @@
-const {
+import { FastifyInstance } from 'fastify';
+import {
+  addTask,
+  deleteTask,
   getAllTasks,
   getTaskById,
-  addTask,
   updateTask,
-  deleteTask,
-} = require('./task.controller');
+} from './task.controller';
 
 const Task = {
   type: 'object',
@@ -94,14 +95,16 @@ const deleteTaskOpts = {
   handler: deleteTask,
 };
 
-const taskRoutes = (fastify, options, done) => {
+/**
+ * Creating routes for task
+ * @param fastify - fastify instance
+ */
+const taskRoutes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.get('/boards/:boardId/tasks', getTasksOpts);
   fastify.get('/boards/:boardId/tasks/:taskId', getTaskOpts);
   fastify.post('/boards/:boardId/tasks', postTaskOpts);
   fastify.put('/boards/:boardId/tasks/:taskId', updateTaskOpts);
   fastify.delete('/boards/:boardId/tasks/:taskId', deleteTaskOpts);
-
-  done();
 };
 
-module.exports = taskRoutes;
+export default taskRoutes;
