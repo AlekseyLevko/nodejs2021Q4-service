@@ -18,4 +18,5 @@ export const config = {
   POSTGRES_PORT: process.env.POSTGRES_PORT,
   POSTGRES_SYNCHRONIZE: process.env.POSTGRES_SYNCHRONIZE === 'true',
   POSTGRES_LOGGING: process.env.POSTGRES_LOGGING === 'true',
+  POSTGRES_MIGRATIONS_RUN: process.env.POSTGRES_MIGRATIONS_RUN === 'true',
 };
