@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Board } from '../boards/board.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Task {
@@ -24,8 +25,15 @@ export class Task {
   @Column({ type: 'uuid', nullable: true })
   columnId!: string | null;
 
-  @ManyToOne(() => Board, (board) => board.columns, {
-    createForeignKeyConstraints: false,
+  @ManyToOne(() => User, (user) => user.tasks, {
+    eager: false,
+    onDelete: 'SET NULL',
   })
-  board?: Board;
+  user!: User;
+
+  @ManyToOne(() => Board, (board) => board.tasks, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
+  board!: Board;
 }

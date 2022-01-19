@@ -12,6 +12,8 @@ export class Board {
   @Column('jsonb')
   columns!: { id: string; title: string; order: number }[];
 
-  @OneToMany(() => Task, (task) => task.board)
+  @OneToMany(() => Task, (task) => task.board, {
+    eager: false,
+  })
   tasks!: Task[];
 }
