@@ -1,6 +1,7 @@
-import fastify from 'fastify';
+import fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import fastifySwagger from 'fastify-swagger';
 import 'reflect-metadata';
+import { authorization } from './auth';
 import loginRoute from './auth/login.router';
 import { logger } from './logger';
 import boardRoutes from './resources/boards/board.router';
@@ -19,8 +20,9 @@ process.on('unhandledRejection', (reason) => {
 
 const app = fastify({ logger });
 
-app.addHook('preHandler', async (req) => {
+app.addHook('preHandler', async (req: FastifyRequest, reply: FastifyReply) => {
   req.log.info({ params: req.params, query: req.query, body: req.body });
+  authorization(req, reply);
 });
 
 app.register(fastifySwagger, {
