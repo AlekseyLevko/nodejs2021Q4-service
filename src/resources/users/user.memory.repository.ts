@@ -1,5 +1,7 @@
+import bcrypt from 'bcrypt';
 import { getRepository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { config } from '../../common/config';
 import { Task } from '../tasks/task.entity';
 import { User } from './user.entity';
 
@@ -21,10 +23,14 @@ const getUserById = (id: string) => getRepository(User).findOne(id);
  * @param user - data for creating new user
  * @returns created user
  */
-const addUser = (user: User) => {
+const addUser = async (user: User) => {
+  const { password } = user;
+  const hash = await bcrypt.hash(password, config.SALT_ROUNDS);
+
   const userRepository = getRepository(User);
   const newUser = userRepository.create({
     ...user,
+    password: hash,
     id: uuid(),
   });
   return userRepository.save(newUser);

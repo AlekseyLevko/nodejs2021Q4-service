@@ -19,4 +19,6 @@ export const config = {
   POSTGRES_SYNCHRONIZE: process.env.POSTGRES_SYNCHRONIZE === 'true',
   POSTGRES_LOGGING: process.env.POSTGRES_LOGGING === 'true',
   POSTGRES_MIGRATIONS_RUN: process.env.POSTGRES_MIGRATIONS_RUN === 'true',
+  SALT_ROUNDS: Number(process.env.SALT_ROUNDS) || 10,
+  SECRET_KEY: process.env.SECRET_KEY || '',
 };

@@ -1,6 +1,7 @@
 import fastify from 'fastify';
 import fastifySwagger from 'fastify-swagger';
 import 'reflect-metadata';
+import loginRoute from './auth/login.router';
 import { logger } from './logger';
 import boardRoutes from './resources/boards/board.router';
 import taskRoutes from './resources/tasks/task.router';
@@ -36,5 +37,6 @@ app.register(fastifySwagger, {
 app.register(userRoutes);
 app.register(boardRoutes);
 app.register(taskRoutes);
+app.register(loginRoute);
 
 export default app;
