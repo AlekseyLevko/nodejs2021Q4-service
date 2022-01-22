@@ -1,4 +1,4 @@
-# RS School REST service. Task 8. PostgreSQL & Typeorm
+# RS School REST service. Task 9. Authentication and JWT
 
 ## Prerequisites
 
@@ -13,10 +13,10 @@
 git clone git@github.com:AlekseyLevko/nodejs2021Q4-service.git
 ```
 
-## Switch to the task8 branch
+## Switch to the task9 branch
 
 ```
-git checkout task8
+git checkout task9
 ```
 
 ## Running an application using docker
@@ -32,5 +32,5 @@ npm install
 ```
 
 ```
-npm test
+npm run test:auth
 ```
