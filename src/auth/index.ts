@@ -12,7 +12,9 @@ const authorization = (req: FastifyRequest, reply: FastifyReply) => {
   }
 
   if (!req.headers.authorization) {
-    reply.code(401).send();
+    reply.code(401).send({
+      message: 'The Authorization request header is missing',
+    });
   }
 
   if (req.headers.authorization) {
@@ -20,7 +22,9 @@ const authorization = (req: FastifyRequest, reply: FastifyReply) => {
     jwt.verify(token, config.SECRET_KEY, (err) => {
       if (err) {
         req.log.error(err);
-        reply.code(401).send();
+        reply.code(401).send({
+          message: 'Provide a valid token for authorization',
+        });
       }
     });
   }

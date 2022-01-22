@@ -16,7 +16,9 @@ const addToken = async (
 
   const token = await loginService.addToken(login, password);
   if (!token) {
-    reply.code(403).send();
+    reply
+      .code(403)
+      .send({ message: 'User with these credentials was not found' });
   }
   reply.send({ token });
 };
