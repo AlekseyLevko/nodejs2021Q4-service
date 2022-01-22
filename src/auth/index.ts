@@ -7,6 +7,10 @@ const authorization = (req: FastifyRequest, reply: FastifyReply) => {
     return;
   }
 
+  if (!['/users', '/boards'].some((url) => req.url.startsWith(url))) {
+    return;
+  }
+
   if (!req.headers.authorization) {
     reply.code(401).send();
   }

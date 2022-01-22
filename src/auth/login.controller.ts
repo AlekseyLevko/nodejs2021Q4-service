@@ -16,7 +16,7 @@ const addToken = async (
 
   const token = await loginService.addToken(login, password);
   if (!token) {
-    reply.code(403);
+    reply.code(403).send();
   }
   reply.send({ token });
 };
