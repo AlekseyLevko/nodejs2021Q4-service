@@ -1,17 +1,15 @@
-export const config = {
+export default () => ({
   PORT: Number(process.env.PORT) || 4000,
   NODE_ENV: process.env.NODE_ENV,
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
   AUTH_MODE: process.env.AUTH_MODE === 'true',
   LOGGING_LEVEL: process.env.LOGGING_LEVEL || 'info',
   DB_TYPE: process.env.DB_TYPE || 'postgres',
-  POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD || 'admin',
+  POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
   POSTGRES_HOST: process.env.POSTGRES_HOST || 'postgres',
   POSTGRES_USERNAME: process.env.POSTGRES_USERNAME || 'postgres',
   POSTGRES_PORT: Number(process.env.POSTGRES_PORT),
-  POSTGRES_SYNCHRONIZE: process.env.POSTGRES_SYNCHRONIZE === 'true',
-  POSTGRES_LOGGING: process.env.POSTGRES_LOGGING === 'true',
-  POSTGRES_MIGRATIONS_RUN: process.env.POSTGRES_MIGRATIONS_RUN === 'true',
+  POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
   SALT_ROUNDS: Number(process.env.SALT_ROUNDS) || 10,
   SECRET_KEY: process.env.SECRET_KEY || '',
-};
+});
