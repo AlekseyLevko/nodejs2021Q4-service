@@ -13,32 +13,24 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<Omit<User, 'tasks'>> {
+  create(createUserDto: CreateUserDto): Promise<User> {
     const newUser = this.usersRepository.create({
       ...createUserDto,
       id: uuid(),
     });
 
-    return await this.usersRepository.save(newUser);
+    return this.usersRepository.save(newUser);
   }
 
-  findAll(): Promise<Omit<User, 'password'>[] | undefined> {
+  findAll(): Promise<User[] | undefined> {
     return this.usersRepository.find();
   }
 
-  async findOne(id: string): Promise<Omit<User, 'password'> | undefined> {
-    const user = await this.usersRepository.findOne(id);
-
-    if (user) {
-      return user;
-    }
-    return;
+  findOne(id: string) {
+    return this.usersRepository.findOne(id);
   }
 
-  async update(
-    id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<Omit<User, 'tasks'> | undefined> {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.usersRepository.findOne(id);
     if (user) {
       this.usersRepository.merge(user, updateUserDto);
@@ -48,7 +40,6 @@ export class UsersService {
   }
 
   async remove(id: string) {
-    const results = await this.usersRepository.delete(id);
-    return Number(results.affected);
+    return this.usersRepository.delete(id);
   }
 }
