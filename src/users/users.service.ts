@@ -13,39 +13,45 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
+  async create(
+    createUserDto: CreateUserDto,
+  ): Promise<Omit<User, 'password' | 'tasks'>> {
     const newUser = this.usersRepository.create({
       ...createUserDto,
       id: uuid(),
     });
 
-    const userToResponse = await this.usersRepository.save(newUser);
-    delete userToResponse.password;
+    const user = await this.usersRepository.save(newUser);
 
-    return userToResponse;
+    return { id: user.id, name: user.name, login: user.login };
   }
 
-  findAll(): Promise<Omit<User, 'password'>[]> {
+  findAll(): Promise<Omit<User, 'password'>[] | undefined> {
     return this.usersRepository.find();
   }
 
-  findOne(id: string): Promise<Omit<User, 'password'>> {
-    return this.usersRepository.findOne(id);
+  async findOne(id: string): Promise<Omit<User, 'password'> | undefined> {
+    const user = await this.usersRepository.findOne(id);
+
+    if (user) {
+      return user;
+    }
+    return;
   }
 
   async update(
     id: string,
     updateUserDto: UpdateUserDto,
-  ): Promise<Omit<User, 'password'>> {
+  ): Promise<Omit<User, 'password' | 'tasks'> | undefined> {
     const user = await this.usersRepository.findOne(id);
     if (user) {
       this.usersRepository.merge(user, updateUserDto);
       await this.usersRepository.save(user);
     }
 
-    delete user.password;
-
-    return user;
+    if (user) {
+      return { id: user.id, name: user.name, login: user.login };
+    }
   }
 
   async remove(id: string) {
