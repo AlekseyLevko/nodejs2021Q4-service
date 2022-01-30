@@ -9,7 +9,7 @@ import { config } from './common/config';
 import { Tables1642614560539 } from './migrations/1642614560539-Tables';
 import { TasksController } from './tasks/tasks.controller';
 import { Task } from './tasks/tasks.entity';
-import { User } from './users/users.entity';
+import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 
 @Module({

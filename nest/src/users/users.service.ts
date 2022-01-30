@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './users.entity';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -12,14 +12,6 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
-
-  findAll(): Promise<Omit<User, 'password'>[]> {
-    return this.usersRepository.find();
-  }
-
-  findOne(id: string): Promise<Omit<User, 'password'>> {
-    return this.usersRepository.findOne(id);
-  }
 
   async create(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const newUser = this.usersRepository.create({
@@ -31,6 +23,14 @@ export class UsersService {
     delete userToResponse.password;
 
     return userToResponse;
+  }
+
+  findAll(): Promise<Omit<User, 'password'>[]> {
+    return this.usersRepository.find();
+  }
+
+  findOne(id: string): Promise<Omit<User, 'password'>> {
+    return this.usersRepository.findOne(id);
   }
 
   async update(
@@ -46,5 +46,10 @@ export class UsersService {
     delete user.password;
 
     return user;
+  }
+
+  async remove(id: string) {
+    const results = await this.usersRepository.delete(id);
+    return Number(results.affected);
   }
 }
