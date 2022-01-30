@@ -3,12 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { BoardsController } from './boards/boards.controller';
-import { Board } from './boards/boards.entity';
+import { BoardsModule } from './boards/boards.module';
+import { Board } from './boards/entities/board.entity';
 import { config } from './common/config';
 import { Tables1642614560539 } from './migrations/1642614560539-Tables';
-import { TasksController } from './tasks/tasks.controller';
-import { Task } from './tasks/tasks.entity';
+import { Task } from './tasks/entities/task.entity';
+import { TasksModule } from './tasks/tasks.module';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 
@@ -32,8 +32,10 @@ import { UsersModule } from './users/users.module';
       },
     }),
     UsersModule,
+    TasksModule,
+    BoardsModule,
   ],
-  controllers: [AppController, TasksController, BoardsController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Board } from '../boards/boards.entity';
-import { User } from '../users/entities/user.entity';
+import { Board } from '../../boards/entities/board.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Task {
