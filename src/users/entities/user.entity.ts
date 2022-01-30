@@ -1,22 +1,24 @@
+import { Exclude } from 'class-transformer';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Task } from '../../tasks/entities/task.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @Column()
-  name!: string;
+  name: string;
 
   @Column()
-  login!: string;
+  login: string;
 
   @Column()
-  password!: string;
+  @Exclude()
+  password: string;
 
   @OneToMany(() => Task, (task) => task.user, {
     eager: false,
   })
-  tasks!: Task[];
+  tasks: Task[];
 }
