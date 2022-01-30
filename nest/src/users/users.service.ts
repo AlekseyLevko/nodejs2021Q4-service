@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './users.entity';
 
 @Injectable()
@@ -12,15 +13,15 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
+  findAll(): Promise<Omit<User, 'password'>[]> {
     return this.usersRepository.find();
   }
 
-  findOne(id: string): Promise<User> {
+  findOne(id: string): Promise<Omit<User, 'password'>> {
     return this.usersRepository.findOne(id);
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const newUser = this.usersRepository.create({
       ...createUserDto,
       id: uuid(),
@@ -30,5 +31,20 @@ export class UsersService {
     delete userToResponse.password;
 
     return userToResponse;
+  }
+
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<Omit<User, 'password'>> {
+    const user = await this.usersRepository.findOne(id);
+    if (user) {
+      this.usersRepository.merge(user, updateUserDto);
+      await this.usersRepository.save(user);
+    }
+
+    delete user.password;
+
+    return user;
   }
 }
