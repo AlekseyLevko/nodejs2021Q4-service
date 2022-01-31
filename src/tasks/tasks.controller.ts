@@ -1,48 +1,55 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
-  Patch,
+  ParseUUIDPipe,
   Post,
-  UseInterceptors,
+  Put,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TasksService } from './tasks.service';
 
-@Controller('next')
+@Controller('/boards/:boardId/tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
-  @Post(':boardId/tasks')
-  @UseInterceptors(ClassSerializerInterceptor)
-  create(@Body() createTaskDto: CreateTaskDto) {
-    return this.tasksService.create(createTaskDto);
+  @Post()
+  create(
+    @Param('boardId', ParseUUIDPipe) boardId: string,
+    @Body() createTaskDto: CreateTaskDto,
+  ) {
+    return this.tasksService.create(boardId, createTaskDto);
   }
 
   @Get()
-  @UseInterceptors(ClassSerializerInterceptor)
-  findAll() {
-    return this.tasksService.findAll();
+  findAll(@Param('boardId', ParseUUIDPipe) boardId: string) {
+    return this.tasksService.findAll(boardId);
   }
 
-  @Get(':id')
-  @UseInterceptors(ClassSerializerInterceptor)
-  findOne(@Param('id') id: string) {
-    return this.tasksService.findOne(+id);
+  @Get(':taskId')
+  async findOne(@Param('taskId', ParseUUIDPipe) taskId: string) {
+    const task = await this.tasksService.findOne(taskId);
+    if (!task) {
+      throw new NotFoundException('Not Found');
+    } else {
+      return task;
+    }
   }
 
-  @Patch(':id')
-  @UseInterceptors(ClassSerializerInterceptor)
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.tasksService.update(+id, updateTaskDto);
+  @Put(':taskId')
+  update(
+    @Param('taskId', ParseUUIDPipe) taskId: string,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ) {
+    return this.tasksService.update(taskId, updateTaskDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tasksService.remove(+id);
+  @Delete(':taskId')
+  remove(@Param('taskId', ParseUUIDPipe) taskId: string) {
+    return this.tasksService.remove(taskId);
   }
 }
