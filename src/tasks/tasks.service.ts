@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
@@ -16,7 +15,6 @@ export class TasksService {
     const newTask = this.taskRepository.create({
       ...createTaskDto,
       boardId,
-      id: uuid(),
     });
 
     return this.taskRepository.save(newTask);

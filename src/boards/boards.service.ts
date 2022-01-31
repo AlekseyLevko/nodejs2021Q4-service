@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { v4 as uuid } from 'uuid';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { Board } from './entities/board.entity';
@@ -13,10 +12,7 @@ export class BoardsService {
   ) {}
 
   create(createBoardDto: CreateBoardDto) {
-    const newBoard = this.boardsRepository.create({
-      ...createBoardDto,
-      id: uuid(),
-    });
+    const newBoard = this.boardsRepository.create(createBoardDto);
 
     return this.boardsRepository.save(newBoard);
   }
