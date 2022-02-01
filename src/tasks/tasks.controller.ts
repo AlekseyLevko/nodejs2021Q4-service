@@ -8,7 +8,9 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TasksService } from './tasks.service';
@@ -18,6 +20,7 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(
     @Param('boardId', ParseUUIDPipe) boardId: string,
     @Body() createTaskDto: CreateTaskDto,
@@ -26,11 +29,13 @@ export class TasksController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll(@Param('boardId', ParseUUIDPipe) boardId: string) {
     return this.tasksService.findAll(boardId);
   }
 
   @Get(':taskId')
+  @UseGuards(JwtAuthGuard)
   async findOne(@Param('taskId', ParseUUIDPipe) taskId: string) {
     const task = await this.tasksService.findOne(taskId);
     if (!task) {
@@ -41,6 +46,7 @@ export class TasksController {
   }
 
   @Put(':taskId')
+  @UseGuards(JwtAuthGuard)
   update(
     @Param('taskId', ParseUUIDPipe) taskId: string,
     @Body() updateTaskDto: UpdateTaskDto,
@@ -49,6 +55,7 @@ export class TasksController {
   }
 
   @Delete(':taskId')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('taskId', ParseUUIDPipe) taskId: string) {
     return this.tasksService.remove(taskId);
   }

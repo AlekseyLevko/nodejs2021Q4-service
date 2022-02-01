@@ -1,7 +1,7 @@
 export default () => ({
   PORT: Number(process.env.PORT) || 4000,
   NODE_ENV: process.env.NODE_ENV,
-  JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
+  JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || 'srs_nodejs_task9',
   AUTH_MODE: process.env.AUTH_MODE === 'true',
   LOGGING_LEVEL: process.env.LOGGING_LEVEL || 'info',
   DB_TYPE: process.env.DB_TYPE || 'postgres',
@@ -11,5 +11,4 @@ export default () => ({
   POSTGRES_PORT: Number(process.env.POSTGRES_PORT),
   POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
   SALT_ROUNDS: Number(process.env.SALT_ROUNDS) || 10,
-  SECRET_KEY: process.env.SECRET_KEY || '',
 });

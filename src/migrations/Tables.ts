@@ -1,8 +1,9 @@
 import * as bcryptjs from 'bcryptjs';
 import config from 'src/common/config';
 import { MigrationInterface, QueryRunner } from 'typeorm';
-export class Tables1642614560539 implements MigrationInterface {
-  name = 'Tables1642614560539';
+
+export class Tables implements MigrationInterface {
+  name = 'Tables1643722609592';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
@@ -35,6 +36,17 @@ export class Tables1642614560539 implements MigrationInterface {
             )
         `);
     await queryRunner.query(`
+            ALTER TABLE "user" DROP COLUMN "login"
+        `);
+    await queryRunner.query(`
+            ALTER TABLE "user"
+            ADD "login" text NOT NULL
+        `);
+    await queryRunner.query(`
+            ALTER TABLE "user"
+            ADD CONSTRAINT "UQ_a62473490b3e4578fd683235c5e" UNIQUE ("login")
+        `);
+    await queryRunner.query(`
             ALTER TABLE "task"
             ADD CONSTRAINT "FK_f316d3fe53497d4d8a2957db8b9" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE
             SET NULL ON UPDATE NO ACTION
@@ -56,6 +68,16 @@ export class Tables1642614560539 implements MigrationInterface {
         `);
     await queryRunner.query(`
             ALTER TABLE "task" DROP CONSTRAINT "FK_f316d3fe53497d4d8a2957db8b9"
+        `);
+    await queryRunner.query(`
+            ALTER TABLE "user" DROP CONSTRAINT "UQ_a62473490b3e4578fd683235c5e"
+        `);
+    await queryRunner.query(`
+            ALTER TABLE "user" DROP COLUMN "login"
+        `);
+    await queryRunner.query(`
+            ALTER TABLE "user"
+            ADD "login" character varying NOT NULL
         `);
     await queryRunner.query(`
             DROP TABLE "board"
