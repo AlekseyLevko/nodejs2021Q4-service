@@ -1,5 +1,6 @@
+import * as bcryptjs from 'bcryptjs';
+import config from 'src/common/config';
 import { MigrationInterface, QueryRunner } from 'typeorm';
-
 export class Tables1642614560539 implements MigrationInterface {
   name = 'Tables1642614560539';
 
@@ -42,6 +43,11 @@ export class Tables1642614560539 implements MigrationInterface {
             ALTER TABLE "task"
             ADD CONSTRAINT "FK_d88edac9d7990145ff6831a7bb3" FOREIGN KEY ("boardId") REFERENCES "board"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
+
+    const hash = await bcryptjs.hash('admin', config().SALT_ROUNDS);
+    await queryRunner.query(
+      `INSERT INTO "user" (name, login, password) VALUES ('admin', 'admin', '${hash}')`,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
