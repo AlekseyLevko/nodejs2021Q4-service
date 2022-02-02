@@ -1,5 +1,6 @@
 export default () => ({
   PORT: Number(process.env.PORT) || 4000,
+  USE_FASTIFY: process.env.USE_FASTIFY === 'true',
   NODE_ENV: process.env.NODE_ENV,
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || 'srs_nodejs_task9',
   AUTH_MODE: process.env.AUTH_MODE === 'true',
