@@ -43,7 +43,26 @@ export class UsersService {
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.usersRepository.findOne(id);
     if (user) {
-      this.usersRepository.merge(user, updateUserDto);
+      const passwordIsChanging = !bcryptjs.compareSync(
+        String(updateUserDto.password),
+        user.password,
+      );
+
+      if (passwordIsChanging) {
+        const newHash = bcryptjs.hashSync(
+          String(updateUserDto.password),
+          config().SALT_ROUNDS,
+        );
+        this.usersRepository.merge(user, {
+          ...updateUserDto,
+          password: newHash,
+        });
+      }
+      this.usersRepository.merge(user, {
+        ...updateUserDto,
+        password: user.password,
+      });
+
       await this.usersRepository.save(user);
     }
     return user;
