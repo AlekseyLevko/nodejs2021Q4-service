@@ -4,14 +4,18 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import fmp from 'fastify-multipart';
 import { AppModule } from './app.module';
 import config from './common/config';
 
 async function bootstrap() {
+  const fastifyAdapter = new FastifyAdapter();
+  fastifyAdapter.register(fmp);
+
   const app = config().USE_FASTIFY
     ? await NestFactory.create<NestFastifyApplication>(
         AppModule,
-        new FastifyAdapter(),
+        fastifyAdapter,
       )
     : await NestFactory.create(AppModule);
 

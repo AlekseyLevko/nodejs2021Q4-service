@@ -1,8 +1,15 @@
+import * as dotenv from 'dotenv';
+import { join } from 'path';
+
+dotenv.config({
+  path: join(__dirname, '../../.env'),
+});
+
 export default () => ({
   PORT: Number(process.env.PORT) || 4000,
   USE_FASTIFY: process.env.USE_FASTIFY === 'true',
   NODE_ENV: process.env.NODE_ENV,
-  JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || 'srs_nodejs_task9',
+  JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
   AUTH_MODE: process.env.AUTH_MODE === 'true',
   LOGGING_LEVEL: process.env.LOGGING_LEVEL || 'info',
   DB_TYPE: process.env.DB_TYPE || 'postgres',
