@@ -1,78 +1,61 @@
-# RS School REST service
+# RS School REST service. Task 10. Nest.js
 
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Docker - [Download & Install Docker Engine](https://docs.docker.com/engine/install/)
+- Docker Compose - [Download & Install Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone git@github.com:AlekseyLevko/nodejs2021Q4-service.git
 ```
 
-## Installing NPM modules
+## Switch to the task10 branch
+
+```
+git checkout task10
+```
+
+## Running an application using docker
+
+```
+docker-compose up
+```
+
+## For Testing (when the application is running)
 
 ```
 npm install
 ```
 
-## Switch to the task4 branch
-
-```
-git checkout task4
-```
-
-## Running application
-
-```
-npm start
-```
-
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
-
-## Testing
-
-After application running open new terminal and enter:
-
-To run all tests without authorization
-
-```
-npm test
-```
-
-To run only one of all test suites (users, boards or tasks)
-
-```
-npm test <suite name>
-```
-
-To run all test with authorization
-
 ```
 npm run test:auth
 ```
 
-To run only specific test suite with authorization (users, boards or tasks)
+## Nest-express - Nest-fastify performance comparison table
 
-```
-npm run test:auth <suite name>
-```
-
-## Development
-
-If you're using VSCode, you can get a better developer experience from integration with [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extensions.
-
-### Auto-fix and format
-
-```
-npm run lint
-```
-
-### Debugging in VSCode
-
-Press <kbd>F5</kbd> to debug.
-
-For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+| Indicator name            | Express | Fastify |
+| :------------------------ | :------ | :------ |
+| http.codes.200:           | 600     | 600     |
+| http.codes.201:           | 150     | 150     |
+| http.request_rate:        | 65/sec  | 75/sec  |
+| http.requests:            | 750     | 750     |
+| http.response_time:       |         |         |
+| min:                      | 9       | 3       |
+| max:                      | 1245    | 1193    |
+| median:                   | 333.7   | 198.4   |
+| p95:                      | 889.1   | 757.6   |
+| p99:                      | 1085.9  | 944     |
+| http.responses:           | 750     | 750     |
+| vusers.completed:         | 150     | 150     |
+| vusers.created:           | 150     | 150     |
+| vusers.created_by_name.0: | 150     | 150     |
+| vusers.session_length:    |         |         |
+| min:                      | 773.7   | 742.9   |
+| max:                      | 3691.6  | 3204.4  |
+| median:                   | 2101.1  | 820.7   |
+| p95:                      | 3678.4  | 2566.3  |
+| p99:                      | 3678.4  | 3197.8  |

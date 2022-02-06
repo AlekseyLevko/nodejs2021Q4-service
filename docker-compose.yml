@@ -1,0 +1,62 @@
+version: '3'
+services:
+  node:
+    image: alekseylevko/rsschool:server
+    build: .
+    container_name: server
+    restart: on-failure
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - custom_network
+    depends_on:
+      - postgres
+      - pgadmin
+    volumes:
+      - node:/usr/app/logs
+      - type: bind
+        source: ./src
+        target: /usr/app/src
+
+  postgres:
+    image: alekseylevko/rsschool:database
+    build: ./database/
+    container_name: database
+    restart: always
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    networks:
+      - custom_network
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+
+  pgadmin:
+    image: alekseylevko/rsschool:pgadmin
+    build: ./pgadmin/
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - ${PGADMIN_PORT}:80
+    networks:
+      - custom_network
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  custom_network:
+    driver: bridge
+
+volumes:
+  node:
+  postgres:
+  pgadmin:
