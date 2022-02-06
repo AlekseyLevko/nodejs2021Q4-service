@@ -42,7 +42,6 @@ export class FilesControllerForFastify {
   }
 
   @Get(':name')
-  @UseGuards(JwtAuthGuard)
   findOne(@Param('name') name: string): StreamableFile {
     return this.filesService.findOne(name);
   }

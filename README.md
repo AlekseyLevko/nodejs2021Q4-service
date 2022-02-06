@@ -1,4 +1,4 @@
-# RS School REST service. Task 9. Authentication and JWT
+# RS School REST service. Task 10. Nest.js
 
 ## Prerequisites
 
@@ -13,10 +13,10 @@
 git clone git@github.com:AlekseyLevko/nodejs2021Q4-service.git
 ```
 
-## Switch to the task9 branch
+## Switch to the task10 branch
 
 ```
-git checkout task9
+git checkout task10
 ```
 
 ## Running an application using docker
@@ -25,7 +25,7 @@ git checkout task9
 docker-compose up
 ```
 
-## For Testing
+## For Testing (when the application is running)
 
 ```
 npm install

@@ -4,6 +4,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import fmp from 'fastify-multipart';
 import { AppModule } from './app.module';
 import config from './common/config';
@@ -19,6 +20,16 @@ async function bootstrap() {
         fastifyAdapter,
       )
     : await NestFactory.create(AppModule);
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Nest api')
+    .setDescription('Available routes for Nest api')
+    .setVersion('1.0')
+    .addTag('RS')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('doc', app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
