@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import fmp from 'fastify-multipart';
+import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import config from './common/config';
 import { HttpExceptionFilter } from './http-exception.filter';
@@ -18,8 +19,9 @@ async function bootstrap() {
     ? await NestFactory.create<NestFastifyApplication>(
         AppModule,
         fastifyAdapter,
+        { bufferLogs: true },
       )
-    : await NestFactory.create(AppModule);
+    : await NestFactory.create(AppModule, { bufferLogs: true });
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Nest api')
@@ -35,6 +37,7 @@ async function bootstrap() {
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useLogger(app.get(Logger));
   await app.listen(config().PORT, '0.0.0.0');
 }
 bootstrap();
